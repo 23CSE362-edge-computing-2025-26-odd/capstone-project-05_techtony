@@ -1,0 +1,45 @@
+DRL-Based Disease Prediction
+Overview
+
+This project applies Deep Reinforcement Learning (DRL) for disease classification using patient sensor data.
+The system uses supervised warm-start pretraining followed by REINFORCE policy gradient fine-tuning.
+
+Pipeline
+
+Preprocessing
+
+Features: Age, Gender, Heart Rate, Temperature, Blood Pressure, SpO2
+
+Standard scaling and label encoding
+
+SMOTE oversampling for imbalance
+
+Supervised Warm-Start
+
+Train neural network with focal loss
+
+Provides initial weights for DRL
+
+DRL Fine-Tuning (REINFORCE)
+
+Agent predicts disease
+
+Rewards:
+
+Correct prediction: +10
+
+Correct rare disease: +15
+
+Wrong prediction: -2
+
+Policy updated with REINFORCE and baseline
+
+Files
+
+main_train_dr_pg.py – training (warm-start + DRL fine-tune)
+
+test_dr_pg.py – load model and evaluate
+
+lab_health.csv – dataset (preprocessed)
+
+Artifacts: model (pg_drl_model_best.pth), scaler, label encoder, test splits
