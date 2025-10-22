@@ -1,0 +1,32 @@
+[
+  {
+    "apiVersion": "v2",
+    "profile": {
+      "name": "Health-Monitor-Device",
+      "description": "Profile for heart rate and blood pressure monitor",
+      "manufacturer": "EdgeX",
+      "model": "v1",
+      "labels": ["health", "monitor"],
+      "deviceResources": [
+        {
+          "name": "Heart-Rate",
+          "description": "Heart rate in bpm",
+          "properties": {
+            "valueType": "Int32",
+            "readWrite": "RW",
+            "units": "bpm"
+          }
+        },
+        {
+          "name": "Blood-Pressure",
+          "description": "Blood pressure in mmHg",
+          "properties": {
+            "valueType": "Int32",
+            "readWrite": "RW",
+            "units": "mmHg"
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "apiVersion": "v2",
+    "device": {
+      "name": "Sim-Patient-01",
+      "description": "Simulated Patient Monitor for DRL model input",
+      "serviceName": "device-patient-monitor",
+      "profileName": "Patient-Monitor-Profile",
+      "adminState": "UNLOCKED",
+      "operatingState": "UP",
+      "protocols": {
+        "example": { "host": "localhost", "port": "1234" }
+      },
+      "labels": ["patient-simulator"]
+    }
+  }
+]

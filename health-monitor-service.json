@@ -1,0 +1,11 @@
+[
+  {
+    "apiVersion": "v2",
+    "service": {
+      "name": "Health-Monitor-Service",
+      "description": "Manages the Health Monitor Device",
+      "baseAddress": "http://localhost:49999",
+      "adminState": "UNLOCKED"
+    }
+  }
+]

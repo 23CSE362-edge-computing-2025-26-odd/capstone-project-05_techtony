@@ -1,0 +1,8 @@
+flask
+prometheus-flask-exporter
+# flask
+joblib
+numpy
+torch
+requests
+scikit-learn  

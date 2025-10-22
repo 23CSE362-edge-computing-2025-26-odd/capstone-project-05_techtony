@@ -1,0 +1,21 @@
+[
+  {
+    "apiVersion": "v2",
+    "profile": {
+      "name": "Patient-Monitor-Profile",
+      "description": "Profile for a multi-sensor patient monitor for DRL model",
+      "manufacturer": "EdgeX",
+      "model": "DRL-v1",
+      "labels": ["health", "drl", "patient"],
+      "deviceResources": [
+        { "name": "Age", "properties": { "valueType": "Float32", "readWrite": "R" }},
+        { "name": "Gender", "properties": { "valueType": "Float32", "readWrite": "R" }},
+        { "name": "HeartRate", "properties": { "valueType": "Float32", "readWrite": "R" }},
+        { "name": "Temperature", "properties": { "valueType": "Float32", "readWrite": "R" }},
+        { "name": "SpO2", "properties": { "valueType": "Float32", "readWrite": "R" }},
+        { "name": "SystolicBP", "properties": { "valueType": "Float32", "readWrite": "R" }},
+        { "name": "DiastolicBP", "properties": { "valueType": "Float32", "readWrite": "R" }}
+      ]
+    }
+  }
+]
