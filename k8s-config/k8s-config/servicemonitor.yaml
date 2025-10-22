@@ -1,0 +1,48 @@
+# # apiVersion: monitoring.coreos.com/v1
+# # kind: ServiceMonitor
+# # metadata:
+# #   name: local-target-app-servicemonitor
+# #   labels:
+# #     # This label tells the Prometheus Operator to pay attention to this ServiceMonitor.
+# #     # "release: monitoring" is the common default.
+# #     release: monitoring
+# #   # Deploy this to the same namespace as Prometheus.
+# #   namespace: monitoring
+# # spec:
+# #   # This section finds the service to scrape.
+# #   selector:
+# #     matchLabels:
+# #       # This must match the label on your 'local-target-app-service'.
+# #       app: local-target-app
+# #   # This tells Prometheus which port on that service to scrape.
+# #   endpoints:
+# #   - port: "8080"
+# #     interval: 15s # How often to scrape.
+# #   # Target services in the 'default' namespace where your app lives.
+# #   namespaceSelector:
+# #     matchNames:
+# #     - default
+# # latest
+# apiVersion: monitoring.coreos.com/v1
+# kind: ServiceMonitor
+# metadata:
+#   name: local-target-app-monitor
+#   namespace: monitoring
+# spec:
+#   selector:
+#     matchLabels:
+#       app: local-target-app
+#   namespaceSelector:
+#     matchNames:
+#       - default
+#   endpoints:
+#     - port: http
+#       path: /metrics
+#       interval: 15s
+#       relabelings:
+#         - sourceLabels: [__meta_kubernetes_pod_name]
+#           targetLabel: pod
+#         - sourceLabels: [__meta_kubernetes_namespace]
+#           targetLabel: namespace
+
+

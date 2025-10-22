@@ -1,0 +1,31 @@
+﻿# # prometheus:
+# #   url: http://monitoring-kube-prometheus-prometheus.monitoring.svc
+# #   port: 9090
+
+# # rules:
+# #   custom:
+# #   - metricsQuery: rate(flask_http_request_duration_seconds_sum{<<.LabelMatchers>>}[2m]) / rate(flask_http_request_duration_seconds_count{<<.LabelMatchers>>}[2m])
+# #     name:
+# #       as: flask_http_request_duration_seconds_avg
+# #       matches: ^flask_http_request_duration_seconds_sum
+# #     resources:
+# #       overrides:
+# #         namespace:
+# #           resource: namespace
+# #         pod:
+# #           resource: pod
+# #     seriesQuery: flask_http_request_duration_seconds_sum{namespace!="",pod!=""}
+# # file5-updated.yaml
+# prometheus:
+#   url: http://monitoring-kube-prometheus-prometheus.monitoring.svc
+#   port: 9090
+
+# rules:
+#   custom:
+#   - seriesQuery: 'flask_http_request_duration_seconds_avg{job="local-target-app-direct"}'
+#     name:
+#       matches: "flask_http_request_duration_seconds_avg"
+#       as: "flask_http_request_duration_seconds_avg"
+#     metricsQuery: 'avg(flask_http_request_duration_seconds_avg{job="local-target-app-direct"})'
+#     resources:
+#       template: <<.Resource>>

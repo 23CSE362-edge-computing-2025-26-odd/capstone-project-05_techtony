@@ -1,0 +1,120 @@
+# # rules:
+# #   default: false
+# #   custom:
+# #   - seriesQuery: '{__name__="flask_http_request_duration_seconds_avg", namespace!="", pod!=""}'
+# #     resources:
+# #       overrides:
+# #         namespace: {resource: "namespace"}
+# #         pod: {resource: "pod"}
+# #     metricsQuery: 'sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.Group>>)'
+# # Configure prometheus-adapter rules:
+# rules:
+#   custom:
+#   - seriesQuery: 'flask_http_request_duration_seconds_sum{namespace!="",pod!=""}'
+#     resources:
+#       overrides:
+#         namespace: {resource: namespace}
+#         pod: {resource: pod}
+#     name:
+#       matches: "^flask_http_request_duration_seconds_sum"
+#       as: "flask_http_request_duration_seconds_avg"
+#     metricsQuery: 'rate(flask_http_request_duration_seconds_sum{<<.LabelMatchers>>}[2m]) / rate(flask_http_request_duration_seconds_count{<<.LabelMatchers>>}[2m])'
+
+# rules:
+#   default: false
+#   custom:
+#   - seriesQuery: '{__name__="flask_http_request_duration_seconds_avg", namespace!="", pod!=""}'
+#     resources:
+#       overrides:
+#         namespace: {resource: "namespace"}
+#         pod: {resource: "pod"}
+#     metricsQuery: 'sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.Group>>)'
+
+
+# rules:
+#   default: false
+#   custom:
+#     - seriesQuery: 'flask_http_request_duration_seconds_avg'
+#       resources:
+#         overrides:
+#           namespace: {resource: "namespace"}
+#           pod: {resource: "pod"}
+#       name:
+#         matches: "^(.*)_avg"
+#         as: "${1}"
+#       metricsQuery: avg(rate(flask_http_request_duration_seconds_avg[1m])) by (pod)
+
+# rules:
+#   custom:
+#   - seriesQuery: 'flask_http_request_duration_seconds_avg{job="local-target-app-direct"}'
+#     resources:
+#       overrides:
+#         namespace: {resource: "namespace"}
+#         service: {resource: "service"}
+#     name:
+#       as: "flask_http_request_duration_seconds_avg"
+#     metricsQuery: "avg(<<.Series>>) by (service) * 1000"
+
+# latest
+# rules:
+#   custom:
+#   - seriesQuery: 'flask_http_request_duration_seconds_avg{job="local-target-app-direct"}'
+#     resources:
+#       overrides:
+#         namespace: {resource: "namespace"}
+#         pod: {resource: "pod"}
+#     name:
+#       as: "flask_http_request_duration_seconds_avg"
+#     metricsQuery: "avg(<<.Series>>) by (pod) * 1000"
+# latest by gpt
+# rules:
+#   custom:
+#     - seriesQuery: 'flask_http_request_duration_seconds_sum{job="local-target-app-direct"}'
+#       resources:
+#         overrides:
+#           namespace: { resource: "namespace" }
+#           pod: { resource: "pod" }
+#       name:
+#         matches: "flask_http_request_duration_seconds_sum"
+#         as: "flask_http_request_duration_seconds_avg"
+#       metricsQuery: |
+#         rate(flask_http_request_duration_seconds_sum{job="local-target-app-direct"}[2m])
+#         /
+#         rate(flask_http_request_duration_seconds_count{job="local-target-app-direct"}[2m])
+# rules:
+#   custom:
+#   - seriesQuery: 'flask_http_request_duration_seconds_avg{job="local-target-app-direct"}'
+#     resources:
+#       overrides:
+#         namespace: {resource: "namespace"}
+#         pod: {resource: "pod"}
+#     name:
+#       as: "flask_http_request_duration_seconds_avg"
+#     metricsQuery: "avg(<<.Series>>) by (pod) * 1000"
+
+# latest v2
+prometheus:
+  url: http://monitoring-kube-prometheus-prometheus.monitoring.svc
+  port: 9090
+rules:
+  default: false
+  custom:
+  # Rule to expose the average request latency for a service
+  - seriesQuery: 'flask_http_request_duration_seconds_avg{job="local-target-app-service"}'
+    # resources:
+      # This rule is not tied to a specific pod, but to the service.
+      # template: <<.Resource>>
+    resources:
+      overrides:
+        namespace: {resource: "namespace"}
+        service: {resource: "service"}
+    name:
+      # This is the metric name referenced in the HPA
+      as: "app_latency_ms"
+    # The query now calculates a single average value for the whole series,
+    # and converts it from seconds to milliseconds. "avg(<<.Series>>) * 1000"
+    metricsQuery: "avg(<<.Series>>) by (service, namespace) * 1000"
+
+# It won't scale down unless the average latency stays consistently well below 500ms for a few minutes (the default cooldown is 5 minutes).
+
+# It won't scale up again unless the average latency with two pods shoots up significantly higher than 500ms.
