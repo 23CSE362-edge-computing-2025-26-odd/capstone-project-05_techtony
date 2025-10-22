@@ -1,0 +1,21 @@
+[
+  {
+    "apiVersion": "v2",
+    "device": {
+      "name": "Health-Monitor-Device-1",
+      "description": "A device that monitors heart rate and blood pressure",
+      "serviceName": "Health-Monitor-Service",
+      "profileName": "Health-Monitor-Device",
+      "adminState": "UNLOCKED",
+      "operatingState": "UP",
+      "protocols": {
+        "example": {
+          "host": "localhost",
+          "port": "1234"
+        }
+      },
+      "labels": ["health", "monitor"]
+    }
+  }
+]
+ 

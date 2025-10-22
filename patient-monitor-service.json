@@ -1,0 +1,11 @@
+[
+  {
+    "apiVersion": "v2",
+    "service": {
+      "name": "device-patient-monitor",
+      "description": "Device service for simulated patient monitors",
+      "baseAddress": "http://localhost:59999",
+      "adminState": "UNLOCKED"
+    }
+  }
+]
