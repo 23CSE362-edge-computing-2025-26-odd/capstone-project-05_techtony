@@ -19,7 +19,8 @@ The architecture is divided into three logical layers: the Edge, the Edge Cluste
 
 ### End-to-End Workflow
 
-*[Workflow diagram would be displayed here]*
+<img width="1620" height="931" alt="image" src="https://github.com/user-attachments/assets/e3d5777a-10e2-472a-9e43-2da5d7f9cdb7" />
+
 
 ---
 
