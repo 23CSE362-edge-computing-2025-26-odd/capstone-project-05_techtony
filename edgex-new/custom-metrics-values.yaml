@@ -1,0 +1,13 @@
+rules:
+  custom:
+  - seriesQuery: 'flask_http_request_duration_seconds_count{namespace!="",pod!=""}'
+    resources:
+      overrides:
+        namespace: {resource: "namespace"}
+        pod: {resource: "pod"}
+    name:
+      matches: "^(.*)_count"
+      as: "${1}_avg"
+    # This is the PromQL query the adapter will run.
+    # It calculates the average from _sum and _count, and multiplies by 1000 to get milliseconds (to match your 500m target).
+    metricsQuery: 'avg(rate(<<.Series>>_sum[1m]) / rate(<<.Series>>_count[1m])) by (<<.Group>>) * 1000'
